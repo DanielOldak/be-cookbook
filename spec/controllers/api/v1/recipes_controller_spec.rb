@@ -16,11 +16,11 @@ describe Api::V1::RecipesController do
     let!(:recipe) { create(:recipe) }
 
     before do
-      get :show, params: { id: recipe.to_param }
+      get :show, params: { id: recipe.id }
     end
 
     it 'returns requested recipe' do
-      expect(response.body).to eq(recipe.to_json)
+      expect(response.body).to eq({data: Api::V1::RecipeShowSerializer.new(recipe)}.to_json)
     end
   end
 
@@ -29,7 +29,8 @@ describe Api::V1::RecipesController do
       {
         recipe: {
           name: 'Leczo',
-          content: 'Very good dish'
+          content: 'Very good dish',
+          price: 5
         }
       }
     end
@@ -65,17 +66,24 @@ describe Api::V1::RecipesController do
 
       it 'returns updated object' do
         put :update, params: { id: recipe.id, recipe: { name: new_name } }
-        expect(JSON.parse(response.body)['name']).to eq(new_name)
+        expect(JSON.parse(response.body)['data']['name']).to eq(new_name)
       end
     end
 
     context 'with invalid params' do
       let(:invalid_new_name) { '' }
+      let(:invalid_new_price) { nil }
 
       it 'doesn\'t update name' do
         expect do
           put :update, params: { id: recipe.id, recipe: { name: invalid_new_name } }
         end.not_to change { recipe.reload.name }
+      end
+      
+      it 'doesn\'t update price' do
+        expect do
+          put :update, params: {id: recipe.id, recipe: { price: invalid_new_price} }
+        end.not_to change { recipe.reload.price }
       end
     end
   end
@@ -89,7 +97,7 @@ describe Api::V1::RecipesController do
 
     it 'returns destroyed object' do
       delete :destroy, params: { id: recipe.id }
-      expect(JSON.parse(response.body)['name']).to eq(recipe.name)
+      expect(JSON.parse(response.body)['data']['name']).to eq(recipe.name)
     end
   end
 end

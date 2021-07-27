@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe RecipeSerializer do
+describe Api::V1::RecipeSerializer do
   subject(:serialized_recipe) { described_class.new(recipe).to_h }
 
   let(:recipe) { build(:recipe) }
