@@ -11,5 +11,5 @@
     Aenean condimentum risus dui, volutpat consequat enim auctor quis. Sed eu elit egestas,
     scelerisque quam quis, posuere libero. Fusce tincidunt sapien vel efficitur cursus.
     Nam a pretium purus, vel vestibulum mi. Aliquam erat volutpat. Morbi sed fermentum ante. Donec maximus lacinia libero,
-    tempor semper libero ultrices posuere. Maecenas id erat ac enim pharetra consequat.")
+    tempor semper libero ultrices posuere. Maecenas id erat ac enim pharetra consequat.", price: 5)
 end
